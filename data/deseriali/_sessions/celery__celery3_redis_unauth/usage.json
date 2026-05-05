@@ -1,0 +1,736 @@
+{
+  "scan_duration": "0:06:12.210062",
+  "total_duration_ms": 372210,
+  "validation_success": true,
+  "main_exit_reason": "complete",
+  "limit_hit_max_rounds": false,
+  "limit_hit_token_budget": false,
+  "limit_hit_wall_timeout": false,
+  "main_agent_calls": 8,
+  "sandbox_agent_calls": 16,
+  "total_calls": 24,
+  "main_agent_usage": [
+    {
+      "timestamp": "2026-05-05T07:35:09.598475+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/celery/celery3_redis_unauth",
+      "agent_type": "main_agent",
+      "usage": {
+        "completion_tokens": 92,
+        "prompt_tokens": 1375,
+        "total_tokens": 1467,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 825,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.000194166,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.000194166,
+          "upstream_inference_prompt_cost": 0.00015939,
+          "upstream_inference_completions_cost": 3.4776e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T07:35:16.022032+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/celery/celery3_redis_unauth",
+      "agent_type": "main_agent",
+      "usage": {
+        "completion_tokens": 131,
+        "prompt_tokens": 1880,
+        "total_tokens": 2011,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 1146,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0002633652,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0002633652,
+          "upstream_inference_prompt_cost": 0.0002138472,
+          "upstream_inference_completions_cost": 4.9518e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T07:35:26.066065+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/celery/celery3_redis_unauth",
+      "agent_type": "main_agent",
+      "usage": {
+        "completion_tokens": 213,
+        "prompt_tokens": 2146,
+        "total_tokens": 2359,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 1373,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0003099096,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0003099096,
+          "upstream_inference_prompt_cost": 0.0002293956,
+          "upstream_inference_completions_cost": 8.0514e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T07:38:03.096688+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/celery/celery3_redis_unauth",
+      "agent_type": "main_agent",
+      "usage": {
+        "completion_tokens": 119,
+        "prompt_tokens": 3188,
+        "total_tokens": 3307,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 2231,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0003423672,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0003423672,
+          "upstream_inference_prompt_cost": 0.0002973852,
+          "upstream_inference_completions_cost": 4.4982e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T07:38:44.376481+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/celery/celery3_redis_unauth",
+      "agent_type": "main_agent",
+      "usage": {
+        "completion_tokens": 103,
+        "prompt_tokens": 3463,
+        "total_tokens": 3566,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 2216,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0004090212,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0004090212,
+          "upstream_inference_prompt_cost": 0.0003700872,
+          "upstream_inference_completions_cost": 3.8934e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T07:38:50.936444+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/celery/celery3_redis_unauth",
+      "agent_type": "main_agent",
+      "usage": {
+        "completion_tokens": 104,
+        "prompt_tokens": 4120,
+        "total_tokens": 4224,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 2595,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.000489006,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.000489006,
+          "upstream_inference_prompt_cost": 0.000449694,
+          "upstream_inference_completions_cost": 3.9312e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T07:38:57.636877+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/celery/celery3_redis_unauth",
+      "agent_type": "main_agent",
+      "usage": {
+        "completion_tokens": 115,
+        "prompt_tokens": 4605,
+        "total_tokens": 4720,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 2855,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.000556416,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.000556416,
+          "upstream_inference_prompt_cost": 0.000512946,
+          "upstream_inference_completions_cost": 4.347e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T07:40:13.943336+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/celery/celery3_redis_unauth",
+      "agent_type": "main_agent",
+      "usage": {
+        "completion_tokens": 1893,
+        "prompt_tokens": 4978,
+        "total_tokens": 6871,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 3335,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.001213632,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.001213632,
+          "upstream_inference_prompt_cost": 0.000498078,
+          "upstream_inference_completions_cost": 0.000715554
+        }
+      }
+    }
+  ],
+  "sandbox_agent_usage": [
+    {
+      "timestamp": "2026-05-05T07:35:30.383049+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/celery/celery3_redis_unauth",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 71,
+        "prompt_tokens": 800,
+        "total_tokens": 871,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 560,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.00010143,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.00010143,
+          "upstream_inference_prompt_cost": 7.4592e-05,
+          "upstream_inference_completions_cost": 2.6838e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T07:35:34.510886+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/celery/celery3_redis_unauth",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 64,
+        "prompt_tokens": 898,
+        "total_tokens": 962,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 565,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.000122346,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.000122346,
+          "upstream_inference_prompt_cost": 9.8154e-05,
+          "upstream_inference_completions_cost": 2.4192e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T07:35:41.189697+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/celery/celery3_redis_unauth",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 126,
+        "prompt_tokens": 989,
+        "total_tokens": 1115,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 662,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0001467144,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0001467144,
+          "upstream_inference_prompt_cost": 9.90864e-05,
+          "upstream_inference_completions_cost": 4.7628e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T07:35:45.989207+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/celery/celery3_redis_unauth",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 63,
+        "prompt_tokens": 1141,
+        "total_tokens": 1204,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 798,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0001303596,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0001303596,
+          "upstream_inference_prompt_cost": 0.0001065456,
+          "upstream_inference_completions_cost": 2.3814e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T07:35:51.045138+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/celery/celery3_redis_unauth",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 80,
+        "prompt_tokens": 1230,
+        "total_tokens": 1310,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 762,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0001673784,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0001673784,
+          "upstream_inference_prompt_cost": 0.0001371384,
+          "upstream_inference_completions_cost": 3.024e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T07:35:57.856404+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/celery/celery3_redis_unauth",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 116,
+        "prompt_tokens": 1336,
+        "total_tokens": 1452,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 881,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0001807092,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0001807092,
+          "upstream_inference_prompt_cost": 0.0001368612,
+          "upstream_inference_completions_cost": 4.3848e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T07:36:04.763718+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/celery/celery3_redis_unauth",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 136,
+        "prompt_tokens": 1478,
+        "total_tokens": 1614,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 931,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0002127132,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0002127132,
+          "upstream_inference_prompt_cost": 0.0001613052,
+          "upstream_inference_completions_cost": 5.1408e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T07:37:24.483529+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/celery/celery3_redis_unauth",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 1546,
+        "prompt_tokens": 1648,
+        "total_tokens": 3194,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.001076152,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.001076152,
+          "upstream_inference_prompt_cost": 0.000426832,
+          "upstream_inference_completions_cost": 0.00064932
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T07:37:56.608003+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/celery/celery3_redis_unauth",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 814,
+        "prompt_tokens": 3213,
+        "total_tokens": 4027,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 2056,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0006510672,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0006510672,
+          "upstream_inference_prompt_cost": 0.0003433752,
+          "upstream_inference_completions_cost": 0.000307692
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T07:38:07.932255+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/celery/celery3_redis_unauth",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 70,
+        "prompt_tokens": 638,
+        "total_tokens": 708,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 408,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 9.47016e-05,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 9.47016e-05,
+          "upstream_inference_prompt_cost": 6.82416e-05,
+          "upstream_inference_completions_cost": 2.646e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T07:38:11.729674+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/celery/celery3_redis_unauth",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 59,
+        "prompt_tokens": 734,
+        "total_tokens": 793,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 455,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.000104076,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.000104076,
+          "upstream_inference_prompt_cost": 8.1774e-05,
+          "upstream_inference_completions_cost": 2.2302e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T07:38:16.534464+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/celery/celery3_redis_unauth",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 68,
+        "prompt_tokens": 820,
+        "total_tokens": 888,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 557,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0001060164,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0001060164,
+          "upstream_inference_prompt_cost": 8.03124e-05,
+          "upstream_inference_completions_cost": 2.5704e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T07:38:21.733377+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/celery/celery3_redis_unauth",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 92,
+        "prompt_tokens": 914,
+        "total_tokens": 1006,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 630,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.00012222,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.00012222,
+          "upstream_inference_prompt_cost": 8.7444e-05,
+          "upstream_inference_completions_cost": 3.4776e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T07:38:25.790729+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/celery/celery3_redis_unauth",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 62,
+        "prompt_tokens": 1033,
+        "total_tokens": 1095,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 630,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.000140868,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.000140868,
+          "upstream_inference_prompt_cost": 0.000117432,
+          "upstream_inference_completions_cost": 2.3436e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T07:38:30.556071+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/celery/celery3_redis_unauth",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 76,
+        "prompt_tokens": 1121,
+        "total_tokens": 1197,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 717,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0001486044,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0001486044,
+          "upstream_inference_prompt_cost": 0.0001198764,
+          "upstream_inference_completions_cost": 2.8728e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T07:38:38.243086+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/celery/celery3_redis_unauth",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 142,
+        "prompt_tokens": 1224,
+        "total_tokens": 1366,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 783,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0001845396,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0001845396,
+          "upstream_inference_prompt_cost": 0.0001308636,
+          "upstream_inference_completions_cost": 5.3676e-05
+        }
+      }
+    }
+  ]
+}

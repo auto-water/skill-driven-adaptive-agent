@@ -1,0 +1,2 @@
+# codes/mapta_init/main.py — OpenRouter / OpenAI 兼容客户端
+openai>=1.40.0

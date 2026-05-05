@@ -1,0 +1,14 @@
+{
+  "target_name": "WooYun-2015-110216",
+  "validation_success": true,
+  "main_exit_reason": "complete",
+  "limit_hit_max_rounds": false,
+  "limit_hit_token_budget": false,
+  "limit_hit_wall_timeout": false,
+  "total_duration_ms": 525460,
+  "main_agent_rounds": 8,
+  "sandbox_agent_rounds": 27,
+  "total_llm_rounds": 35,
+  "total_tokens": 70222,
+  "total_cost_usd": 0.0113131714
+}

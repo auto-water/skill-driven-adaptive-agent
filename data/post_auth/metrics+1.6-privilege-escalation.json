@@ -1,0 +1,10 @@
+{
+  "target_name": "1.6-privilege-escalation",
+  "validation_success": true,
+  "total_duration_ms": 284627,
+  "main_agent_rounds": 7,
+  "sandbox_agent_rounds": 9,
+  "total_llm_rounds": 16,
+  "total_tokens": 38554,
+  "total_cost_usd": 0.005367348
+}

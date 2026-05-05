@@ -1,0 +1,1066 @@
+{
+  "scan_duration": "0:08:45.460741",
+  "total_duration_ms": 525460,
+  "validation_success": true,
+  "main_exit_reason": "complete",
+  "limit_hit_max_rounds": false,
+  "limit_hit_token_budget": false,
+  "limit_hit_wall_timeout": false,
+  "main_agent_calls": 8,
+  "sandbox_agent_calls": 27,
+  "total_calls": 35,
+  "main_agent_usage": [
+    {
+      "timestamp": "2026-05-05T08:23:47.443116+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/elasticsearch/WooYun-2015-110216",
+      "agent_type": "main_agent",
+      "usage": {
+        "completion_tokens": 99,
+        "prompt_tokens": 1378,
+        "total_tokens": 1477,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 854,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0001909908,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0001909908,
+          "upstream_inference_prompt_cost": 0.0001535688,
+          "upstream_inference_completions_cost": 3.7422e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T08:23:52.064216+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/elasticsearch/WooYun-2015-110216",
+      "agent_type": "main_agent",
+      "usage": {
+        "completion_tokens": 87,
+        "prompt_tokens": 2376,
+        "total_tokens": 2463,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 1473,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0002975616,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0002975616,
+          "upstream_inference_prompt_cost": 0.0002646756,
+          "upstream_inference_completions_cost": 3.2886e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T08:24:11.485422+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/elasticsearch/WooYun-2015-110216",
+      "agent_type": "main_agent",
+      "usage": {
+        "completion_tokens": 111,
+        "prompt_tokens": 2533,
+        "total_tokens": 2644,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.000702667,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.000702667,
+          "upstream_inference_prompt_cost": 0.000656047,
+          "upstream_inference_completions_cost": 4.662e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T08:25:58.703562+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/elasticsearch/WooYun-2015-110216",
+      "agent_type": "main_agent",
+      "usage": {
+        "completion_tokens": 251,
+        "prompt_tokens": 2928,
+        "total_tokens": 3179,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 2432,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.000562204,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.000562204,
+          "upstream_inference_prompt_cost": 0.000456784,
+          "upstream_inference_completions_cost": 0.00010542
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T08:27:24.925267+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/elasticsearch/WooYun-2015-110216",
+      "agent_type": "main_agent",
+      "usage": {
+        "completion_tokens": 104,
+        "prompt_tokens": 3992,
+        "total_tokens": 4096,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 2816,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.000728424,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.000728424,
+          "upstream_inference_prompt_cost": 0.000684744,
+          "upstream_inference_completions_cost": 4.368e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T08:27:33.711342+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/elasticsearch/WooYun-2015-110216",
+      "agent_type": "main_agent",
+      "usage": {
+        "completion_tokens": 79,
+        "prompt_tokens": 4222,
+        "total_tokens": 4301,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 3968,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.000634646,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.000634646,
+          "upstream_inference_prompt_cost": 0.000601466,
+          "upstream_inference_completions_cost": 3.318e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T08:27:41.667882+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/elasticsearch/WooYun-2015-110216",
+      "agent_type": "main_agent",
+      "usage": {
+        "completion_tokens": 100,
+        "prompt_tokens": 4399,
+        "total_tokens": 4499,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 2727,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0005278644,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0005278644,
+          "upstream_inference_prompt_cost": 0.0004900644,
+          "upstream_inference_completions_cost": 3.78e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T08:31:07.393708+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/elasticsearch/WooYun-2015-110216",
+      "agent_type": "main_agent",
+      "usage": {
+        "completion_tokens": 1457,
+        "prompt_tokens": 5728,
+        "total_tokens": 7185,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 3837,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0011239704,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0011239704,
+          "upstream_inference_prompt_cost": 0.0005732244,
+          "upstream_inference_completions_cost": 0.000550746
+        }
+      }
+    }
+  ],
+  "sandbox_agent_usage": [
+    {
+      "timestamp": "2026-05-05T08:24:16.962610+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/elasticsearch/WooYun-2015-110216",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 101,
+        "prompt_tokens": 605,
+        "total_tokens": 706,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 417,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 9.60624e-05,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 9.60624e-05,
+          "upstream_inference_prompt_cost": 5.78844e-05,
+          "upstream_inference_completions_cost": 3.8178e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T08:24:20.854672+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/elasticsearch/WooYun-2015-110216",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 60,
+        "prompt_tokens": 733,
+        "total_tokens": 793,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 476,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 9.94392e-05,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 9.94392e-05,
+          "upstream_inference_prompt_cost": 7.67592e-05,
+          "upstream_inference_completions_cost": 2.268e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T08:24:25.329760+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/elasticsearch/WooYun-2015-110216",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 64,
+        "prompt_tokens": 820,
+        "total_tokens": 884,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 516,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0001138032,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0001138032,
+          "upstream_inference_prompt_cost": 8.96112e-05,
+          "upstream_inference_completions_cost": 2.4192e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T08:25:03.020162+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/elasticsearch/WooYun-2015-110216",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 609,
+        "prompt_tokens": 918,
+        "total_tokens": 1527,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.000493542,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.000493542,
+          "upstream_inference_prompt_cost": 0.000237762,
+          "upstream_inference_completions_cost": 0.00025578
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T08:25:10.690894+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/elasticsearch/WooYun-2015-110216",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 155,
+        "prompt_tokens": 1546,
+        "total_tokens": 1701,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 973,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0002275056,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0002275056,
+          "upstream_inference_prompt_cost": 0.0001689156,
+          "upstream_inference_completions_cost": 5.859e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T08:25:15.358134+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/elasticsearch/WooYun-2015-110216",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 63,
+        "prompt_tokens": 1727,
+        "total_tokens": 1790,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 1053,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0002201976,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0002201976,
+          "upstream_inference_prompt_cost": 0.0001963836,
+          "upstream_inference_completions_cost": 2.3814e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T08:25:33.836724+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/elasticsearch/WooYun-2015-110216",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 271,
+        "prompt_tokens": 1816,
+        "total_tokens": 2087,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 1125,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.00030492,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.00030492,
+          "upstream_inference_prompt_cost": 0.000202482,
+          "upstream_inference_completions_cost": 0.000102438
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T08:26:06.151783+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/elasticsearch/WooYun-2015-110216",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 134,
+        "prompt_tokens": 823,
+        "total_tokens": 957,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 567,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0001294524,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0001294524,
+          "upstream_inference_prompt_cost": 7.88004e-05,
+          "upstream_inference_completions_cost": 5.0652e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T08:26:12.357536+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/elasticsearch/WooYun-2015-110216",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 110,
+        "prompt_tokens": 983,
+        "total_tokens": 1093,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 668,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0001377936,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0001377936,
+          "upstream_inference_prompt_cost": 9.62136e-05,
+          "upstream_inference_completions_cost": 4.158e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T08:26:18.297227+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/elasticsearch/WooYun-2015-110216",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 105,
+        "prompt_tokens": 1119,
+        "total_tokens": 1224,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 749,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0001518048,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0001518048,
+          "upstream_inference_prompt_cost": 0.0001121148,
+          "upstream_inference_completions_cost": 3.969e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T08:26:43.315212+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/elasticsearch/WooYun-2015-110216",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 299,
+        "prompt_tokens": 1258,
+        "total_tokens": 1557,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.000451402,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.000451402,
+          "upstream_inference_prompt_cost": 0.000325822,
+          "upstream_inference_completions_cost": 0.00012558
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T08:26:47.936149+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/elasticsearch/WooYun-2015-110216",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 78,
+        "prompt_tokens": 1576,
+        "total_tokens": 1654,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 977,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0002050524,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0002050524,
+          "upstream_inference_prompt_cost": 0.0001755684,
+          "upstream_inference_completions_cost": 2.9484e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T08:27:18.051801+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/elasticsearch/WooYun-2015-110216",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 799,
+        "prompt_tokens": 1680,
+        "total_tokens": 2479,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 1024,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0004931388,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0004931388,
+          "upstream_inference_prompt_cost": 0.0001911168,
+          "upstream_inference_completions_cost": 0.000302022
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T08:27:48.238036+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/elasticsearch/WooYun-2015-110216",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 126,
+        "prompt_tokens": 634,
+        "total_tokens": 760,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 412,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0001139544,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0001139544,
+          "upstream_inference_prompt_cost": 6.63264e-05,
+          "upstream_inference_completions_cost": 4.7628e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T08:27:52.275515+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/elasticsearch/WooYun-2015-110216",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 60,
+        "prompt_tokens": 787,
+        "total_tokens": 847,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 543,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 9.78516e-05,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 9.78516e-05,
+          "upstream_inference_prompt_cost": 7.51716e-05,
+          "upstream_inference_completions_cost": 2.268e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T08:27:57.608964+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/elasticsearch/WooYun-2015-110216",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 79,
+        "prompt_tokens": 873,
+        "total_tokens": 952,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 584,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0001174068,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0001174068,
+          "upstream_inference_prompt_cost": 8.75448e-05,
+          "upstream_inference_completions_cost": 2.9862e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T08:28:01.874499+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/elasticsearch/WooYun-2015-110216",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 68,
+        "prompt_tokens": 979,
+        "total_tokens": 1047,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 616,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0001327032,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0001327032,
+          "upstream_inference_prompt_cost": 0.0001069992,
+          "upstream_inference_completions_cost": 2.5704e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T08:28:21.551964+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/elasticsearch/WooYun-2015-110216",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 170,
+        "prompt_tokens": 1082,
+        "total_tokens": 1252,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.000351638,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.000351638,
+          "upstream_inference_prompt_cost": 0.000280238,
+          "upstream_inference_completions_cost": 7.14e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T08:28:26.094536+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/elasticsearch/WooYun-2015-110216",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 69,
+        "prompt_tokens": 1271,
+        "total_tokens": 1340,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 762,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0001735524,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0001735524,
+          "upstream_inference_prompt_cost": 0.0001474704,
+          "upstream_inference_completions_cost": 2.6082e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T08:28:31.259719+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/elasticsearch/WooYun-2015-110216",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 96,
+        "prompt_tokens": 1366,
+        "total_tokens": 1462,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 928,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0001700496,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0001700496,
+          "upstream_inference_prompt_cost": 0.0001337616,
+          "upstream_inference_completions_cost": 3.6288e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T08:28:35.744994+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/elasticsearch/WooYun-2015-110216",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 61,
+        "prompt_tokens": 1488,
+        "total_tokens": 1549,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 982,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0001753164,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0001753164,
+          "upstream_inference_prompt_cost": 0.0001522584,
+          "upstream_inference_completions_cost": 2.3058e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T08:28:41.034948+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/elasticsearch/WooYun-2015-110216",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 83,
+        "prompt_tokens": 1575,
+        "total_tokens": 1658,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 992,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0002032884,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0002032884,
+          "upstream_inference_prompt_cost": 0.0001719144,
+          "upstream_inference_completions_cost": 3.1374e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T08:29:00.310631+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/elasticsearch/WooYun-2015-110216",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 59,
+        "prompt_tokens": 1692,
+        "total_tokens": 1751,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.000463008,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.000463008,
+          "upstream_inference_prompt_cost": 0.000438228,
+          "upstream_inference_completions_cost": 2.478e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T08:29:04.503751+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/elasticsearch/WooYun-2015-110216",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 57,
+        "prompt_tokens": 1770,
+        "total_tokens": 1827,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 1079,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0002228688,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0002228688,
+          "upstream_inference_prompt_cost": 0.0002013228,
+          "upstream_inference_completions_cost": 2.1546e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T08:29:09.530891+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/elasticsearch/WooYun-2015-110216",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 61,
+        "prompt_tokens": 1854,
+        "total_tokens": 1915,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 1149,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0002296728,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0002296728,
+          "upstream_inference_prompt_cost": 0.0002066148,
+          "upstream_inference_completions_cost": 2.3058e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T08:29:19.990584+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/elasticsearch/WooYun-2015-110216",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 220,
+        "prompt_tokens": 1941,
+        "total_tokens": 2161,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 1222,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0002951424,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0002951424,
+          "upstream_inference_prompt_cost": 0.0002119824,
+          "upstream_inference_completions_cost": 8.316e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T08:30:08.830998+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/elasticsearch/WooYun-2015-110216",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 1218,
+        "prompt_tokens": 2187,
+        "total_tokens": 3405,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 1487,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0006742764,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0006742764,
+          "upstream_inference_prompt_cost": 0.0002138724,
+          "upstream_inference_completions_cost": 0.000460404
+        }
+      }
+    }
+  ]
+}

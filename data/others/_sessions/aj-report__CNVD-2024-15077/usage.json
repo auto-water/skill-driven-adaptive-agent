@@ -1,0 +1,1096 @@
+{
+  "scan_duration": "0:09:26.646243",
+  "total_duration_ms": 566646,
+  "validation_success": true,
+  "main_exit_reason": "complete",
+  "limit_hit_max_rounds": false,
+  "limit_hit_token_budget": false,
+  "limit_hit_wall_timeout": false,
+  "main_agent_calls": 8,
+  "sandbox_agent_calls": 28,
+  "total_calls": 36,
+  "main_agent_usage": [
+    {
+      "timestamp": "2026-05-05T09:36:55.969146+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "main_agent",
+      "usage": {
+        "completion_tokens": 89,
+        "prompt_tokens": 1375,
+        "total_tokens": 1464,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 825,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.000193032,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.000193032,
+          "upstream_inference_prompt_cost": 0.00015939,
+          "upstream_inference_completions_cost": 3.3642e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T09:37:01.896711+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "main_agent",
+      "usage": {
+        "completion_tokens": 114,
+        "prompt_tokens": 2061,
+        "total_tokens": 2175,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 1236,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0002821392,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0002821392,
+          "upstream_inference_prompt_cost": 0.0002390472,
+          "upstream_inference_completions_cost": 4.3092e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T09:37:22.820886+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "main_agent",
+      "usage": {
+        "completion_tokens": 165,
+        "prompt_tokens": 2334,
+        "total_tokens": 2499,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.000673806,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.000673806,
+          "upstream_inference_prompt_cost": 0.000604506,
+          "upstream_inference_completions_cost": 6.93e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T09:40:19.782546+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "main_agent",
+      "usage": {
+        "completion_tokens": 123,
+        "prompt_tokens": 3364,
+        "total_tokens": 3487,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 2052,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0004288284,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0004288284,
+          "upstream_inference_prompt_cost": 0.0003823344,
+          "upstream_inference_completions_cost": 4.6494e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T09:41:46.085913+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "main_agent",
+      "usage": {
+        "completion_tokens": 146,
+        "prompt_tokens": 4235,
+        "total_tokens": 4381,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 2625,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.000527058,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.000527058,
+          "upstream_inference_prompt_cost": 0.00047187,
+          "upstream_inference_completions_cost": 5.5188e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T09:43:27.613437+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "main_agent",
+      "usage": {
+        "completion_tokens": 254,
+        "prompt_tokens": 4840,
+        "total_tokens": 5094,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 3146,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0006021792,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0006021792,
+          "upstream_inference_prompt_cost": 0.0005061672,
+          "upstream_inference_completions_cost": 9.6012e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T09:45:35.415146+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "main_agent",
+      "usage": {
+        "completion_tokens": 1827,
+        "prompt_tokens": 5274,
+        "total_tokens": 7101,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 3586,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0012063492,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0012063492,
+          "upstream_inference_prompt_cost": 0.0005157432,
+          "upstream_inference_completions_cost": 0.000690606
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T09:45:48.260517+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "main_agent",
+      "usage": {
+        "completion_tokens": 147,
+        "prompt_tokens": 7361,
+        "total_tokens": 7508,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 5005,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.000775404,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.000775404,
+          "upstream_inference_prompt_cost": 0.000719838,
+          "upstream_inference_completions_cost": 5.5566e-05
+        }
+      }
+    }
+  ],
+  "sandbox_agent_usage": [
+    {
+      "timestamp": "2026-05-05T09:37:28.357031+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 114,
+        "prompt_tokens": 770,
+        "total_tokens": 884,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 515,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.00012033,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.00012033,
+          "upstream_inference_prompt_cost": 7.7238e-05,
+          "upstream_inference_completions_cost": 4.3092e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T09:37:33.390028+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 93,
+        "prompt_tokens": 910,
+        "total_tokens": 1003,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 627,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0001222704,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0001222704,
+          "upstream_inference_prompt_cost": 8.71164e-05,
+          "upstream_inference_completions_cost": 3.5154e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T09:38:36.024391+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 1217,
+        "prompt_tokens": 1037,
+        "total_tokens": 2254,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.000779723,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.000779723,
+          "upstream_inference_prompt_cost": 0.000268583,
+          "upstream_inference_completions_cost": 0.00051114
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T09:38:55.540523+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 88,
+        "prompt_tokens": 2282,
+        "total_tokens": 2370,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.000627998,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.000627998,
+          "upstream_inference_prompt_cost": 0.000591038,
+          "upstream_inference_completions_cost": 3.696e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T09:40:13.380825+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 872,
+        "prompt_tokens": 2390,
+        "total_tokens": 3262,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 1625,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.000563346,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.000563346,
+          "upstream_inference_prompt_cost": 0.00023373,
+          "upstream_inference_completions_cost": 0.000329616
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T09:40:25.712099+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 112,
+        "prompt_tokens": 652,
+        "total_tokens": 764,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 404,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0001150128,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0001150128,
+          "upstream_inference_prompt_cost": 7.26768e-05,
+          "upstream_inference_completions_cost": 4.2336e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T09:40:31.528726+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 102,
+        "prompt_tokens": 790,
+        "total_tokens": 892,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 481,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0001285452,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0001285452,
+          "upstream_inference_prompt_cost": 8.99892e-05,
+          "upstream_inference_completions_cost": 3.8556e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T09:40:49.927026+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 453,
+        "prompt_tokens": 927,
+        "total_tokens": 1380,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.000430353,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.000430353,
+          "upstream_inference_prompt_cost": 0.000240093,
+          "upstream_inference_completions_cost": 0.00019026
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T09:40:55.392906+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 92,
+        "prompt_tokens": 1400,
+        "total_tokens": 1492,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 965,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.000168714,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.000168714,
+          "upstream_inference_prompt_cost": 0.000133938,
+          "upstream_inference_completions_cost": 3.4776e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T09:41:04.855744+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 212,
+        "prompt_tokens": 1519,
+        "total_tokens": 1731,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 926,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0002529072,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0002529072,
+          "upstream_inference_prompt_cost": 0.0001727712,
+          "upstream_inference_completions_cost": 8.0136e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T09:41:09.977153+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 90,
+        "prompt_tokens": 1757,
+        "total_tokens": 1847,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 1106,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0002259432,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0002259432,
+          "upstream_inference_prompt_cost": 0.0001919232,
+          "upstream_inference_completions_cost": 3.402e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T09:41:38.287391+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 734,
+        "prompt_tokens": 1873,
+        "total_tokens": 2607,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 1123,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0004947516,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0004947516,
+          "upstream_inference_prompt_cost": 0.0002172996,
+          "upstream_inference_completions_cost": 0.000277452
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T09:41:51.788609+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 112,
+        "prompt_tokens": 679,
+        "total_tokens": 791,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 414,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0001195488,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0001195488,
+          "upstream_inference_prompt_cost": 7.72128e-05,
+          "upstream_inference_completions_cost": 4.2336e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T09:41:56.865283+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 95,
+        "prompt_tokens": 818,
+        "total_tokens": 913,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 523,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0001234296,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0001234296,
+          "upstream_inference_prompt_cost": 8.75196e-05,
+          "upstream_inference_completions_cost": 3.591e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T09:42:13.456544+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 110,
+        "prompt_tokens": 947,
+        "total_tokens": 1057,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.000291473,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.000291473,
+          "upstream_inference_prompt_cost": 0.000245273,
+          "upstream_inference_completions_cost": 4.62e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T09:42:21.113942+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 159,
+        "prompt_tokens": 1077,
+        "total_tokens": 1236,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 689,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0001752408,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0001752408,
+          "upstream_inference_prompt_cost": 0.0001151388,
+          "upstream_inference_completions_cost": 6.0102e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T09:42:30.340979+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 203,
+        "prompt_tokens": 1262,
+        "total_tokens": 1465,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 807,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0002117304,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0002117304,
+          "upstream_inference_prompt_cost": 0.0001349964,
+          "upstream_inference_completions_cost": 7.6734e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T09:42:35.985394+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 93,
+        "prompt_tokens": 1491,
+        "total_tokens": 1584,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 909,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0002047248,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0002047248,
+          "upstream_inference_prompt_cost": 0.0001695708,
+          "upstream_inference_completions_cost": 3.5154e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T09:42:44.541495+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 181,
+        "prompt_tokens": 1610,
+        "total_tokens": 1791,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 966,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0002550492,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0002550492,
+          "upstream_inference_prompt_cost": 0.0001866312,
+          "upstream_inference_completions_cost": 6.8418e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T09:43:15.999933+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 444,
+        "prompt_tokens": 1825,
+        "total_tokens": 2269,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.000659155,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.000659155,
+          "upstream_inference_prompt_cost": 0.000472675,
+          "upstream_inference_completions_cost": 0.00018648
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T09:43:32.846946+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 92,
+        "prompt_tokens": 634,
+        "total_tokens": 726,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 418,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 9.97416e-05,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 9.97416e-05,
+          "upstream_inference_prompt_cost": 6.49656e-05,
+          "upstream_inference_completions_cost": 3.4776e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T09:43:37.226356+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 77,
+        "prompt_tokens": 753,
+        "total_tokens": 830,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 474,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0001113588,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0001113588,
+          "upstream_inference_prompt_cost": 8.22528e-05,
+          "upstream_inference_completions_cost": 2.9106e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T09:43:42.004337+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 90,
+        "prompt_tokens": 856,
+        "total_tokens": 946,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 539,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0001274868,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0001274868,
+          "upstream_inference_prompt_cost": 9.34668e-05,
+          "upstream_inference_completions_cost": 3.402e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T09:43:47.573883+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 107,
+        "prompt_tokens": 973,
+        "total_tokens": 1080,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 651,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0001379952,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0001379952,
+          "upstream_inference_prompt_cost": 9.75492e-05,
+          "upstream_inference_completions_cost": 4.0446e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T09:44:07.349338+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 573,
+        "prompt_tokens": 1114,
+        "total_tokens": 1687,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.000529186,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.000529186,
+          "upstream_inference_prompt_cost": 0.000288526,
+          "upstream_inference_completions_cost": 0.00024066
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T09:44:12.217952+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 87,
+        "prompt_tokens": 1706,
+        "total_tokens": 1793,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 1040,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.000226926,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.000226926,
+          "upstream_inference_prompt_cost": 0.00019404,
+          "upstream_inference_completions_cost": 3.2886e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T09:44:16.769643+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 84,
+        "prompt_tokens": 1820,
+        "total_tokens": 1904,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 1183,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.0002220876,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.0002220876,
+          "upstream_inference_prompt_cost": 0.0001903356,
+          "upstream_inference_completions_cost": 3.1752e-05
+        }
+      }
+    },
+    {
+      "timestamp": "2026-05-05T09:44:24.492246+00:00",
+      "target_url": "/home/mykali/Projects/workbench/vulhub/aj-report/CNVD-2024-15077",
+      "agent_type": "sandbox_agent",
+      "usage": {
+        "completion_tokens": 166,
+        "prompt_tokens": 1930,
+        "total_tokens": 2096,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": 0,
+          "cached_tokens": 1235,
+          "cache_write_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost": 0.00026901,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.00026901,
+          "upstream_inference_prompt_cost": 0.000206262,
+          "upstream_inference_completions_cost": 6.2748e-05
+        }
+      }
+    }
+  ]
+}
