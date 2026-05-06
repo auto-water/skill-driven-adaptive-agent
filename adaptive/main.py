@@ -6,6 +6,7 @@ import uuid
 import asyncio
 import contextvars
 import tempfile
+import shlex
 from pathlib import Path
 from typing import Any, Dict, Optional, List, FrozenSet, Tuple
 from dataclasses import dataclass
@@ -16,7 +17,6 @@ import threading
 import logging
 
 from function_tool import function_tool
-from sandbox_run_cmd import clamp_shell_timeout_sec
 import json as json_module
 
 
@@ -58,11 +58,8 @@ if _title:
 
 def _optional_openai_timeout_and_retries() -> Tuple[Any, int]:
     """
-    未设置 OPENROUTER_CHAT_TIMEOUT_SEC 时：不覆盖 SDK 默认（读超时 600s，与 init/main 一致），避免慢模型
-    在 180s 被截断后触发 httpx 重试，把单次调用拖长到数分钟。
-
-    若显式设置 OPENROUTER_CHAT_TIMEOUT_SEC：使用该秒数 [30,900] 作为 httpx 读超时；默认将 max_retries 置 0
-    （可用 OPENROUTER_MAX_RETRIES 覆盖），避免「超时 → 再重试两轮」放大墙钟。
+    未设置 OPENROUTER_CHAT_TIMEOUT_SEC 时不覆盖 SDK 默认（读超时约 600s）。
+    若设置该变量：作为 httpx 读超时；默认 max_retries=0 以免超时后重试拖长墙钟（可用 OPENROUTER_MAX_RETRIES）。
     """
     raw = (os.getenv("OPENROUTER_CHAT_TIMEOUT_SEC") or "").strip()
     if not raw:
@@ -109,9 +106,10 @@ def _default_vulhub_root() -> Path:
 VULHUB_ROOT: Path = _default_vulhub_root()
 DOCKER_COMPOSE_TIMEOUT_SEC = int(os.getenv("DOCKER_COMPOSE_TIMEOUT_SEC", "600"))
 
-# 运行产物根目录：codes/logs/<本文件父目录名>/<同名前缀>-<靶场或 PoC 父目录名>/（arch → codes/logs/arch/…）
+# 运行产物根目录：codes/logs/<main.py 所在目录名>/<目录名-靶场或 PoC 父目录名>/
 _CODES_DIR = Path(__file__).resolve().parent.parent
-SESSION_LOG_ROOT = _CODES_DIR / "logs" / Path(__file__).resolve().parent.name
+_SCRIPT_DIR_NAME = Path(__file__).resolve().parent.name
+SESSION_LOG_ROOT = _CODES_DIR / "logs" / _SCRIPT_DIR_NAME
 
 
 def resolve_vulhub_case_dir(case_relative: str) -> Path:
@@ -179,8 +177,8 @@ _round_limit_hit_var: contextvars.ContextVar[bool] = contextvars.ContextVar(
 
 
 def _script_parent_dir_name() -> str:
-    """main.py 所在目录名，例如 init、arch（与会话目录 codes/logs/<该名>/ 一致）。"""
-    return Path(__file__).resolve().parent.name
+    """main.py 所在目录名，例如 adaptive。"""
+    return _SCRIPT_DIR_NAME
 
 
 def session_label_vulhub(case_dir: Path) -> str:
@@ -204,7 +202,7 @@ def _sanitize_init_log_category(raw: str) -> str:
 
 def ensure_session_log_dir(session_label: str, subdir: Optional[str] = None) -> Path:
     """
-    创建 codes/logs/<实现目录名>/[subdir/]<session_label>/，返回绝对路径。
+    创建 codes/logs/<script_dir>/[subdir/]<session_label>/，返回绝对路径。
     subdir 非空时来自 INIT_LOG_CATEGORY，便于按 baked_envs 批次分类。
     """
     root = SESSION_LOG_ROOT.resolve()
@@ -230,18 +228,12 @@ def get_run_output_dir() -> Path:
     return Path(d).resolve() if d else Path.cwd().resolve()
 
 
-def _ensure_session_writable_paths(run_dir: Path, report_path: Path) -> None:
-    """保证会话目录与报告父目录存在，避免 write_text 时 FileNotFoundError。"""
-    run_dir.mkdir(parents=True, exist_ok=True)
-    report_path.parent.mkdir(parents=True, exist_ok=True)
-
-
 @dataclass
 class RunOutcome:
     """单次 PoC / 靶场验证运行结果。"""
 
     text: str
-    main_exit_reason: str  # complete | max_rounds | token_budget | wall_timeout | request_timeout
+    main_exit_reason: str  # complete | max_rounds | token_budget | wall_timeout
     validation_success: bool
 
 
@@ -253,9 +245,24 @@ def _slug_from_target_url(url: str) -> str:
 
 async def _local_run_shell(command: str, timeout: int) -> str:
     """在宿主上以 shell 执行命令（授权实验环境；cwd 为当前 run 输出目录）。"""
-    from host_exec import local_run_shell
-
-    return await local_run_shell(command, timeout, str(get_run_output_dir()))
+    workdir = str(get_run_output_dir())
+    proc = await asyncio.create_subprocess_shell(
+        command,
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.PIPE,
+        cwd=workdir,
+        executable="/bin/bash",
+    )
+    try:
+        out_b, err_b = await asyncio.wait_for(proc.communicate(), timeout=timeout)
+    except asyncio.TimeoutError:
+        proc.kill()
+        await proc.wait()
+        return f"Exit code: -1\n\nSTDOUT\n\nSTDERR\nTimed out after {timeout}s (local shell)"
+    out = out_b.decode(errors="replace") if out_b else ""
+    err = err_b.decode(errors="replace") if err_b else ""
+    code = proc.returncode if proc.returncode is not None else -1
+    return f"Exit code: {code}\n\nSTDOUT\n{out}\n\nSTDERR\n{err}"
 
 
 # Usage tracking
@@ -263,6 +270,7 @@ class UsageTracker:
     def __init__(self):
         self.main_agent_usage = []
         self.sandbox_agent_usage = []
+        self.mcp_tool_usage = []
         self.start_time = datetime.now(UTC)
         self.validation_success: Optional[bool] = None
         self.main_exit_reason: Optional[str] = None
@@ -295,6 +303,37 @@ class UsageTracker:
         }
         self.sandbox_agent_usage.append(entry)
         logging.info(f"Sandbox Agent Usage - Target: {target_url}, Usage: {usage_data}")
+
+    def log_mcp_tool_usage(
+        self,
+        tool_name: str,
+        args: Dict[str, Any],
+        ok: bool,
+        output_preview: str = "",
+        target_url: str = "",
+    ) -> None:
+        entry = {
+            "timestamp": datetime.now(UTC).isoformat(),
+            "target_url": target_url,
+            "agent_type": "mcp_tool",
+            "tool_name": tool_name,
+            "ok": bool(ok),
+            "args": args,
+            "usage": {
+                "total_tokens": 0,
+                "prompt_tokens": 0,
+                "completion_tokens": 0,
+                "cost": 0.0,
+            },
+            "output_preview": (output_preview or "")[:500],
+        }
+        self.mcp_tool_usage.append(entry)
+        logging.info(
+            "MCP Tool Usage - Target: %s, Tool: %s, Ok: %s",
+            target_url,
+            tool_name,
+            ok,
+        )
     
     def get_summary(self):
         """Get usage summary for all agents."""
@@ -312,12 +351,13 @@ class UsageTracker:
             "limit_hit_max_rounds": reason == "max_rounds",
             "limit_hit_token_budget": reason == "token_budget",
             "limit_hit_wall_timeout": reason == "wall_timeout",
-            "limit_hit_request_timeout": reason == "request_timeout",
             "main_agent_calls": len(self.main_agent_usage),
             "sandbox_agent_calls": len(self.sandbox_agent_usage),
+            "mcp_tool_calls": len(self.mcp_tool_usage),
             "total_calls": len(self.main_agent_usage) + len(self.sandbox_agent_usage),
             "main_agent_usage": self.main_agent_usage,
             "sandbox_agent_usage": self.sandbox_agent_usage,
+            "mcp_tool_usage": self.mcp_tool_usage,
         }
 
     def save_to_file(self, output_dir: Optional[Path] = None) -> Tuple[str, Dict[str, Any]]:
@@ -347,7 +387,7 @@ def rollup_tokens_and_cost(summary: Dict[str, Any]) -> Tuple[int, float]:
     """从 usage 记录汇总 token 与 cost（与 OpenRouter 返回字段一致）。"""
     total_tokens = 0
     total_cost = 0.0
-    for key in ("main_agent_usage", "sandbox_agent_usage"):
+    for key in ("main_agent_usage", "sandbox_agent_usage", "mcp_tool_usage"):
         for entry in summary.get(key) or []:
             u = entry.get("usage") or {}
             total_tokens += int(u.get("total_tokens") or 0)
@@ -367,7 +407,6 @@ def build_metrics_payload(
     汇总指标（供 metrics+{靶场名}.json）。
     - main_agent_rounds: 主智能体 LLM 调用次数（与 main_agent_calls 一致）
     - total_llm_rounds: 主 + 子智能体全部 LLM 调用次数
-    - limit_hit_request_timeout: 单次 chat.completions 超时（OPENROUTER_CHAT_TIMEOUT_SEC）
     """
     tokens, cost = rollup_tokens_and_cost(summary)
     reason = summary.get("main_exit_reason")
@@ -378,7 +417,6 @@ def build_metrics_payload(
         "limit_hit_max_rounds": bool(summary.get("limit_hit_max_rounds", False)),
         "limit_hit_token_budget": bool(summary.get("limit_hit_token_budget", False)),
         "limit_hit_wall_timeout": bool(summary.get("limit_hit_wall_timeout", False)),
-        "limit_hit_request_timeout": bool(summary.get("limit_hit_request_timeout", False)),
         "total_duration_ms": int(summary.get("total_duration_ms", 0)),
         "main_agent_rounds": int(summary.get("main_agent_calls", 0)),
         "sandbox_agent_rounds": int(summary.get("sandbox_agent_calls", 0)),
@@ -391,8 +429,7 @@ def build_metrics_payload(
 def write_metrics_file(
     run_dir: Path, target_label: str, summary: Dict[str, Any]
 ) -> Path:
-    """写入 codes/logs/<实现目录>/.../metrics+{target_label}.json"""
-    run_dir.mkdir(parents=True, exist_ok=True)
+    """写入 codes/logs/<script_dir>/.../metrics+{target_label}.json"""
     safe = target_label.replace("/", "_").replace("\\", "_").strip() or "unknown"
     path = run_dir / f"metrics+{safe}.json"
     payload = build_metrics_payload(target_label, summary)
@@ -462,10 +499,6 @@ async def run_sandbox_agent(instruction: str, max_rounds: int = 20):
         (
             "You are an agent that runs on the local lab host using two tools: "
             "`sandbox_run_command` (bash on the host) and `sandbox_run_python` (Python on the host). "
-            "For any command that performs network I/O (curl, wget, nc, telnet, openssl s_client, "
-            "ssh to live hosts, etc.), you MUST include a tool-native time limit inside the shell command "
-            "itself (e.g. `curl --connect-timeout 3 --max-time 8 ...`, `wget -T 8 ...`, `nc -w 3 ...`). "
-            "Also pass a sensible `timeout` argument to `sandbox_run_command` as an outer cap (often 15–120). "
             "Keep responses within 30,000 characters; chunk large outputs. Think step-by-step before taking actions."
         ),
     )
@@ -495,9 +528,6 @@ async def run_validator_agent(instruction: str, max_rounds: int = 20):
             "`sandbox_run_command` (bash) and `sandbox_run_python` (Python). Your goal is to: "
             "(1) Reproduce the PoC minimally and safely, (2) Capture evidence (stdout, file diffs, HTTP responses), "
             "(3) Decide if the PoC reliably demonstrates a real vulnerability with impact, (4) Provide a concise verdict. "
-            "Whenever you use network-reachability checks (curl, wget, nc, etc.), the shell command MUST include "
-            "explicit per-tool timeouts (e.g. `curl --connect-timeout 3 --max-time 8 ...`) and you MUST set "
-            "`sandbox_run_command`'s `timeout` parameter as a reasonable outer bound. "
             "Always think step-by-step before actions. Keep outputs within 30,000 characters and chunk large outputs. "
             "Avoid destructive actions unless explicitly required for validation."
         ),
@@ -566,13 +596,10 @@ async def sandbox_run_command(command: str, timeout: int = 120):
     在宿主上以 bash 执行 shell 命令，返回 stdout/stderr/exit code（cwd 为当前会话输出目录）。
 
     Arguments:
-        command: 要执行的 shell 命令（如 ls -la）。若含 curl/wget/nc 等网络访问，命令正文中必须写出
-            工具自带的超时（例如 curl 的 --connect-timeout 与 --max-time），勿依赖无上限请求。
-        timeout: 整段 shell（含 pipeline）的最长等待秒数；超时后运行时会终止进程组（见 sandbox_run_cmd）。
-            受环境变量 SANDBOX_SHELL_TIMEOUT_DEFAULT / SANDBOX_SHELL_TIMEOUT_MAX 钳制；网络探测建议 15–120。
+        command: 要执行的 shell 命令（如 ls -la）。
+        timeout: 最长等待秒数。
     """
-    timeout = clamp_shell_timeout_sec(timeout)
-    print(f"Running command (local, timeout={timeout}s): {command}")
+    print(f"Running command (local): {command}")
     try:
         return await _local_run_shell(command, timeout)
     except Exception as e:
@@ -622,8 +649,33 @@ async def execute_tool(name: str, arguments: Dict[str, Any]) -> str:
             else:
                 out = await func_tool(**arguments)
         else:
-            out = {"error": f"Unknown tool: {name}", "args": arguments}
+            if playwright_mcp_client.has_tool(name):
+                out = await playwright_mcp_client.call_tool(name, arguments)
+                ut = get_current_usage_tracker()
+                if ut:
+                    hint = getattr(_thread_local, "current_target_url", "")
+                    out_preview = out if isinstance(out, str) else json.dumps(out, ensure_ascii=False)
+                    ut.log_mcp_tool_usage(
+                        tool_name=name,
+                        args=arguments,
+                        ok=True,
+                        output_preview=out_preview,
+                        target_url=hint,
+                    )
+            else:
+                out = {"error": f"Unknown tool: {name}", "args": arguments}
     except Exception as e:
+        if playwright_mcp_client.has_tool(name):
+            ut = get_current_usage_tracker()
+            if ut:
+                hint = getattr(_thread_local, "current_target_url", "")
+                ut.log_mcp_tool_usage(
+                    tool_name=name,
+                    args=arguments,
+                    ok=False,
+                    output_preview=str(e),
+                    target_url=hint,
+                )
         out = {"error": str(e), "args": arguments}
     return out if isinstance(out, str) else json.dumps(out)
 
@@ -700,8 +752,245 @@ def _usage_to_plain(usage: Any) -> Any:
     return usage
 
 
+def _env_bool(name: str, default: bool = False) -> bool:
+    raw = (os.getenv(name, "") or "").strip().lower()
+    if not raw:
+        return default
+    return raw in ("1", "true", "yes", "on")
+
+
+def _env_mcp_command_and_args() -> Tuple[str, List[str]]:
+    cmd = (os.getenv("PLAYWRIGHT_MCP_COMMAND") or "npx").strip() or "npx"
+    raw_args = (os.getenv("PLAYWRIGHT_MCP_ARGS") or "@playwright/mcp@latest").strip()
+    args = shlex.split(raw_args) if raw_args else ["@playwright/mcp@latest"]
+    return cmd, args
+
+
+class _MCPStdioClient:
+    """最小 MCP stdio JSON-RPC 客户端（优先兼容 NDJSON）。"""
+
+    def __init__(self, command: str, args: List[str]):
+        self.command = command
+        self.args = args
+        self.proc: Optional[asyncio.subprocess.Process] = None
+        self._req_id = 0
+        self._io_lock = asyncio.Lock()
+
+    async def start(self) -> None:
+        if self.proc and self.proc.returncode is None:
+            return
+        self.proc = await asyncio.create_subprocess_exec(
+            self.command,
+            *self.args,
+            stdin=asyncio.subprocess.PIPE,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+        )
+
+    async def _read_message(self) -> Dict[str, Any]:
+        if not self.proc or not self.proc.stdout:
+            raise RuntimeError("MCP process stdout unavailable")
+        first_line_b = await self.proc.stdout.readline()
+        if not first_line_b:
+            raise RuntimeError("MCP process closed stdout")
+        first_line = first_line_b.decode("utf-8", errors="replace").strip()
+        if not first_line:
+            return await self._read_message()
+
+        # Playwright MCP stdio 当前默认是 NDJSON：每行一条 JSON-RPC 消息。
+        if not first_line.lower().startswith("content-length:"):
+            return json.loads(first_line)
+
+        # 兼容 Content-Length framing（若未来或其它服务端使用）。
+        rhs = first_line.split(":", 1)[1].strip()
+        content_len = int(rhs)
+        while True:
+            line_b = await self.proc.stdout.readline()
+            if not line_b:
+                raise RuntimeError("MCP process closed stdout while reading headers")
+            line = line_b.decode("utf-8", errors="replace").strip()
+            if not line:
+                break
+        payload_b = await self.proc.stdout.readexactly(content_len)
+        payload = payload_b.decode("utf-8", errors="replace")
+        return json.loads(payload)
+
+    async def _write_message(self, payload: Dict[str, Any]) -> None:
+        if not self.proc or not self.proc.stdin:
+            raise RuntimeError("MCP process stdin unavailable")
+        # Playwright MCP stdio 使用 NDJSON 输入。
+        body = (json.dumps(payload, ensure_ascii=False) + "\n").encode("utf-8")
+        self.proc.stdin.write(body)
+        await self.proc.stdin.drain()
+
+    async def request(
+        self, method: str, params: Optional[Dict[str, Any]] = None, timeout_sec: float = 30.0
+    ) -> Dict[str, Any]:
+        async with self._io_lock:
+            if not self.proc or self.proc.returncode is not None:
+                raise RuntimeError("MCP process is not running")
+            self._req_id += 1
+            rid = self._req_id
+            req = {
+                "jsonrpc": "2.0",
+                "id": rid,
+                "method": method,
+                "params": params or {},
+            }
+            await self._write_message(req)
+            deadline = time.monotonic() + max(0.1, timeout_sec)
+            while True:
+                left = deadline - time.monotonic()
+                if left <= 0:
+                    raise TimeoutError(f"MCP request timeout: {method}")
+                msg = await asyncio.wait_for(self._read_message(), timeout=left)
+                if msg.get("id") != rid:
+                    continue
+                if "error" in msg:
+                    raise RuntimeError(f"MCP error: {msg['error']}")
+                return msg.get("result") or {}
+
+    async def notify(self, method: str, params: Optional[Dict[str, Any]] = None) -> None:
+        async with self._io_lock:
+            req = {"jsonrpc": "2.0", "method": method, "params": params or {}}
+            await self._write_message(req)
+
+
+class PlaywrightMCPClient:
+    """可选 Playwright MCP 客户端；连接失败时自动降级。"""
+
+    def __init__(self):
+        self.enabled = _env_bool("PLAYWRIGHT_MCP_ENABLED", True)
+        self._stdio: Optional[_MCPStdioClient] = None
+        self._ready = False
+        self._tools_cache: List[Dict[str, Any]] = []
+        self._tool_name_set: FrozenSet[str] = frozenset()
+        self._connect_lock = asyncio.Lock()
+        self._last_error: Optional[str] = None
+
+    def _timeout_sec(self) -> float:
+        raw = (os.getenv("PLAYWRIGHT_MCP_TIMEOUT_SEC") or "").strip()
+        if not raw:
+            return 25.0
+        try:
+            v = float(raw)
+            return max(3.0, min(120.0, v))
+        except ValueError:
+            return 25.0
+
+    async def _initialize_once(self) -> None:
+        if not self.enabled:
+            raise RuntimeError("PLAYWRIGHT_MCP_ENABLED is disabled")
+        cmd, args = _env_mcp_command_and_args()
+        self._stdio = _MCPStdioClient(cmd, args)
+        await self._stdio.start()
+        to = self._timeout_sec()
+        versions = ["2025-03-26", "2024-11-05", "2024-10-07"]
+        init_ok = False
+        for pv in versions:
+            try:
+                await self._stdio.request(
+                    "initialize",
+                    {
+                        "protocolVersion": pv,
+                        "capabilities": {},
+                        "clientInfo": {"name": "adaptive-main", "version": "1.0"},
+                    },
+                    timeout_sec=to,
+                )
+                init_ok = True
+                break
+            except Exception:
+                continue
+        if not init_ok:
+            raise RuntimeError("MCP initialize failed for all protocol versions")
+        await self._stdio.notify("notifications/initialized", {})
+        await self.refresh_tools()
+        self._ready = True
+
+    async def ensure_ready(self) -> bool:
+        if self._ready:
+            return True
+        async with self._connect_lock:
+            if self._ready:
+                return True
+            try:
+                await self._initialize_once()
+                self._last_error = None
+                logging.info("Playwright MCP connected and initialized.")
+                return True
+            except Exception as e:
+                self._last_error = str(e)
+                self._ready = False
+                logging.warning("Playwright MCP unavailable, fallback to local tools only: %s", e)
+                return False
+
+    async def refresh_tools(self) -> List[Dict[str, Any]]:
+        if not self._stdio:
+            return []
+        result = await self._stdio.request("tools/list", {}, timeout_sec=self._timeout_sec())
+        tools_raw = result.get("tools") or []
+        oai_tools: List[Dict[str, Any]] = []
+        names: List[str] = []
+        for t in tools_raw:
+            name = t.get("name")
+            if not name:
+                continue
+            names.append(name)
+            oai_tools.append(
+                {
+                    "type": "function",
+                    "function": {
+                        "name": name,
+                        "description": t.get("description") or "",
+                        "parameters": t.get("inputSchema")
+                        or {"type": "object", "properties": {}, "additionalProperties": True},
+                    },
+                }
+            )
+        self._tools_cache = oai_tools
+        self._tool_name_set = frozenset(names)
+        return oai_tools
+
+    async def get_openai_tools(self) -> List[Dict[str, Any]]:
+        ok = await self.ensure_ready()
+        if not ok:
+            return []
+        return list(self._tools_cache)
+
+    def has_tool(self, name: str) -> bool:
+        return name in self._tool_name_set
+
+    async def call_tool(self, name: str, arguments: Dict[str, Any]) -> str:
+        ok = await self.ensure_ready()
+        if not ok or not self._stdio:
+            raise RuntimeError(self._last_error or "Playwright MCP is unavailable")
+        result = await self._stdio.request(
+            "tools/call",
+            {"name": name, "arguments": arguments or {}},
+            timeout_sec=self._timeout_sec(),
+        )
+        content = result.get("content")
+        if isinstance(content, list):
+            chunks: List[str] = []
+            for item in content:
+                if isinstance(item, dict):
+                    txt = item.get("text")
+                    if txt is not None:
+                        chunks.append(str(txt))
+                    else:
+                        chunks.append(json.dumps(item, ensure_ascii=False))
+                else:
+                    chunks.append(str(item))
+            text = "\n".join(chunks).strip()
+            if text:
+                return text
+        return json.dumps(result, ensure_ascii=False)
+
+
 # Generate tools automatically from decorated functions
 tools = generate_tools_from_function_tools()
+playwright_mcp_client = PlaywrightMCPClient()
 
 
 def _env_int_nonnegative(name: str, default: int = 0) -> int:
@@ -718,14 +1007,11 @@ def _env_int_nonnegative(name: str, default: int = 0) -> int:
 def _main_strategy() -> str:
     """
     MAIN_STRATEGY=react（默认）：单段 ReAct 式工具循环。
-    MAIN_STRATEGY=plan_solve：先仅 read_poc_file 规划，再全工具执行。
-    MAIN_STRATEGY=queue：Planner JSON + 顺序 TaskQueue（硬编排）。
+    MAIN_STRATEGY=plan_solve：先仅 read_poc_file 规划，再全工具执行（仍写入同一套 metrics 字段）。
     """
     v = (os.getenv("MAIN_STRATEGY", "react") or "react").strip().lower().replace("-", "_")
     if v in ("plan_solve", "ps", "psolve"):
         return "plan_solve"
-    if v in ("queue", "hard_queue", "task_queue"):
-        return "queue"
     return "react"
 
 
@@ -755,8 +1041,7 @@ _PLAN_PHASE_SYSTEM_SUFFIX = (
 _EXEC_PHASE_SYSTEM_SUFFIX = (
     "\n\n【阶段二：执行】\n"
     "现已进入执行阶段：你可使用 read_poc_file、validator_agent、sandbox_agent、vulhub_compose_* 等全部工具，"
-    "按上文材料与计划完成复现与取证，并输出最终漏洞验证报告（须含执行摘要、证据、明确结论，以及单独小节「关键 payload」）。\n"
-    "经子智能体执行的网络类 shell：须在命令内写明 curl/wget/nc 等自带超时，并为 sandbox_run_command 设合理 timeout。"
+    "按上文材料与计划完成复现与取证，并输出最终漏洞验证报告（须含执行摘要、证据、明确结论，以及单独小节「关键 payload」）。"
 )
 
 _SOLVE_PHASE_USER = (
@@ -786,6 +1071,14 @@ async def _chat_tool_agent_loop(
     """OpenRouter/OpenAI Chat Completions tool loop (ReAct-style)。返回 (文本, exit_reason)。"""
     flat = [t for t in tools if t.get("name") in allowed_tool_names]
     oai_tools = tools_to_openai_chat_format(flat)
+    # 主执行阶段动态注入 Playwright MCP 工具；连接失败时自动降级，不影响本地工具。
+    if usage_agent == "main" and allowed_tool_names != frozenset({"read_poc_file"}):
+        try:
+            mcp_tools = await playwright_mcp_client.get_openai_tools()
+            if mcp_tools:
+                oai_tools.extend(mcp_tools)
+        except Exception as e:
+            logging.warning("Playwright MCP tools injection skipped: %s", e)
     rounds = 0
     target_hint = getattr(_thread_local, "current_target_url", "")
     max_total_tokens = _env_int_nonnegative("MAX_TOTAL_TOKENS", 0)
@@ -874,86 +1167,6 @@ def read_targets_from_file(file_path: str) -> List[str]:
         print(f"Error reading target file: {e}")
         return []
 
-
-async def _run_planner_queue_branch(
-    max_rounds: int,
-    user_prompt: str,
-    system_prompt: str,
-    target_url: str,
-) -> RunOutcome:
-    """MAIN_STRATEGY=queue：LLM 产出 JSON 任务表后由 planner_queue 顺序执行。"""
-    import planner_queue
-
-    logging.info(
-        "Main strategy=queue (PLANNER_MODEL=%r, max_rounds=%s)",
-        (os.getenv("PLANNER_MODEL") or "").strip() or CHAT_MODEL,
-        max_rounds,
-    )
-    model = (os.getenv("PLANNER_MODEL") or "").strip() or CHAT_MODEL
-    hint = target_url or ""
-
-    def _log_main(u: Any, t_hint: str) -> None:
-        tr = get_current_usage_tracker()
-        if tr and u is not None:
-            tr.log_main_agent_usage(u, t_hint)
-
-    user_body = (
-        user_prompt
-        + f"\n\n【编排约束】主循环 max_rounds={max_rounds}；validator 类任务的 max_rounds 不得超过该值。"
-    )
-    tasks, err = await planner_queue.plan_tasks_json(
-        client,
-        model=model,
-        system_prompt=system_prompt,
-        user_body=user_body,
-        target_hint=hint,
-        log_main_usage=_log_main,
-        usage_to_plain=_usage_to_plain,
-    )
-    if not tasks:
-        return RunOutcome(
-            text=err or "Planner failed",
-            main_exit_reason="complete",
-            validation_success=False,
-        )
-
-    wall_t0 = time.monotonic()
-    max_wall = _env_int_nonnegative("MAX_WALL_CLOCK_SEC", 0)
-    max_tok = _env_int_nonnegative("MAX_TOTAL_TOKENS", 0)
-
-    async def _shell_runner(cmd: str, to: int) -> str:
-        from host_exec import local_run_shell
-
-        return await local_run_shell(cmd, clamp_shell_timeout_sec(to), str(get_run_output_dir()))
-
-    async def _val_runner(inst: str, mr: int) -> str:
-        mr_adj = min(mr, max_rounds) if max_rounds > 0 else mr
-        mr2 = _clamp_nested_tool_max_rounds(mr_adj)
-        return await run_validator_agent(inst, mr2)
-
-    def _tok() -> int:
-        tr = get_current_usage_tracker()
-        if not tr:
-            return 0
-        return rollup_tokens_and_cost(tr.get_summary())[0]
-
-    text, reason, ok = await planner_queue.run_planned_queue(
-        tasks,
-        shell_runner=_shell_runner,
-        validator_runner=_val_runner,
-        get_total_tokens=_tok,
-        max_total_tokens=max_tok,
-        max_wall_sec=max_wall,
-        wall_t0=wall_t0,
-    )
-    if reason in ("wall_timeout", "token_budget"):
-        _round_limit_hit_var.set(True)
-    print(text)
-    lim = _round_limit_hit_var.get()
-    final_ok = ok and reason == "complete" and bool((text or "").strip()) and not lim
-    return RunOutcome(text=text or "", main_exit_reason=reason, validation_success=final_ok)
-
-
 async def run_continuously(max_rounds: int = 20, user_prompt: str = "", system_prompt: str = "", target_url: str = "", sandbox_instance=None) -> RunOutcome:
     """
     PoC 验证主循环（OpenRouter Chat Completions + 工具）。
@@ -966,20 +1179,12 @@ async def run_continuously(max_rounds: int = 20, user_prompt: str = "", system_p
     当环境变量 MAIN_STRATEGY=plan_solve 时：先仅允许 read_poc_file（轮数上限见 PLAN_MAX_ROUNDS，默认 8），
     再进入全工具执行阶段；max_rounds 仍仅约束执行阶段。metrics JSON 字段集合与 react 模式一致（main_agent_rounds
     为两阶段主模型调用次数之和，数据仍来自同一 UsageTracker 路径）。
-
-    MAIN_STRATEGY=queue：Planner（JSON tasks）+ TaskQueue 顺序执行 shell/validator/read_file（见 planner_queue）。
     """
     _ = sandbox_instance
     _thread_local.current_target_url = target_url
     _round_limit_hit_var.set(False)
 
-    strategy = _main_strategy()
-    if strategy == "queue":
-        return await _run_planner_queue_branch(
-            max_rounds, user_prompt, system_prompt, target_url
-        )
-
-    if strategy != "plan_solve":
+    if _main_strategy() != "plan_solve":
         messages: List[Dict[str, Any]] = [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt},
@@ -1136,7 +1341,6 @@ async def run_single_target_scan(target_url: str, system_prompt: str, base_user_
         usage_tracker.set_exit_metadata(outcome)
 
         result_path = run_dir / "report.md"
-        _ensure_session_writable_paths(run_dir, result_path)
         with open(result_path, "w", encoding="utf-8") as f:
             f.write(outcome.text)
 
@@ -1308,8 +1512,6 @@ if __name__ == "__main__":
             "- vulhub_compose_pull / vulhub_compose_up / vulhub_compose_down：在靶场目录执行 compose；case_dir_relative 为相对 VULHUB_ROOT 的路径片段、或绝对路径；空字符串表示 VULHUB_ROOT。\n"
             "- read_poc_file：读取 README.md 或其它说明文件（相对路径按 cwd 解析）。\n"
             "- validator_agent：在本地宿主环境按 PoC 最小化复现并取证；必要时用 sandbox_agent 做更灵活的命令行探索（均为本地 bash/python3）。\n"
-            "凡通过 sandbox_run_command / 子智能体内 shell 做 HTTP 或任意网络探测时：命令正文必须包含工具自带的超时参数（例如 curl 使用 --connect-timeout 与 --max-time；wget 使用 -T；nc 使用 -w），"
-            "并同时为 sandbox_run_command 传入合理的 timeout 秒数作为外层兜底；禁止依赖无超时上限的网络命令。\n"
             "宿主程序可能在对话前已自动 pull+up，并在对话结束后自动 down -v；你仍可在需要时自行调用 compose 工具（例如重建环境）。\n"
             "若本机或子进程网络无法直达靶场映射端口，须在报告中说明，并给出应在「与靶场互通的网络环境」下执行的 curl/http 验证命令与关键 payload。\n"
             "最终输出必须包含：执行摘要、验证步骤、证据摘录、明确结论（有效/无效/无法判断）、以及单独小节「关键 payload」（curl/原始 HTTP/可复用利用片段）。",
@@ -1353,7 +1555,6 @@ if __name__ == "__main__":
             report_path = Path(rf)
         else:
             report_path = run_dir / (rf or "report.md")
-        _ensure_session_writable_paths(run_dir, report_path)
         report_path.write_text(outcome.text or "", encoding="utf-8")
         usage_path, usage_snapshot = tracker.save_to_file()
         metrics_path = write_metrics_file(run_dir, slug, usage_snapshot)
@@ -1371,7 +1572,6 @@ if __name__ == "__main__":
         "SYSTEM_PROMPT",
         "你是授权实验环境下的 Web 漏洞 PoC 验证助手。流程：必要时用 read_poc_file 读取 PoC 文件；"
         "用 validator_agent 在本地环境中最小化复现并给出结论；仅在需要更自由命令行探索时使用 sandbox_agent（宿主执行）。"
-        "凡 shell 网络验证：命令内须写明 curl/wget/nc 等自带的超时选项，并为 sandbox_run_command 设置合理 timeout。"
         "最终回复须包含：执行摘要、验证步骤、证据（命令/输出片段）、明确结论（有效/无效/无法判断），"
         "以及单独小节「关键 payload」列出 curl、HTTP 原始报文或可复用利用片段。",
     )
@@ -1405,7 +1605,6 @@ if __name__ == "__main__":
         report_path = Path(rf)
     else:
         report_path = run_dir / (rf or "report.md")
-    _ensure_session_writable_paths(run_dir, report_path)
     report_path.write_text(outcome.text or "", encoding="utf-8")
     usage_path, usage_snapshot = tracker.save_to_file()
     metrics_label = poc_file.parent.name if poc_file.is_file() else poc_file.name

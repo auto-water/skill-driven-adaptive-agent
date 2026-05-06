@@ -1,0 +1,109 @@
+- generic [ref=e2]:
+  - generic [ref=e9]:
+    - generic [ref=e11]:
+      - link "ActiveMQ" [ref=e12] [cursor=pointer]:
+        - /url: http://activemq.apache.org/
+      - text: ™
+      - link "ASF" [ref=e13] [cursor=pointer]:
+        - /url: http://www.apache.org/
+    - generic [ref=e14]:
+      - generic [ref=e15]:
+        - link "Home" [ref=e16] [cursor=pointer]:
+          - /url: /admin/index.jsp;jsessionid=node011z0z536bvsw116hma8xfdh87r0.node0
+        - text: "|"
+        - link "Queues" [ref=e17] [cursor=pointer]:
+          - /url: /admin/queues.jsp;jsessionid=node011z0z536bvsw116hma8xfdh87r0.node0
+        - text: "|"
+        - link "Topics" [ref=e18] [cursor=pointer]:
+          - /url: /admin/topics.jsp;jsessionid=node011z0z536bvsw116hma8xfdh87r0.node0
+        - text: "|"
+        - link "Subscribers" [ref=e19] [cursor=pointer]:
+          - /url: /admin/subscribers.jsp;jsessionid=node011z0z536bvsw116hma8xfdh87r0.node0
+        - text: "|"
+        - link "Connections" [ref=e20] [cursor=pointer]:
+          - /url: /admin/connections.jsp;jsessionid=node011z0z536bvsw116hma8xfdh87r0.node0
+        - text: "|"
+        - link "Network" [ref=e21] [cursor=pointer]:
+          - /url: /admin/network.jsp;jsessionid=node011z0z536bvsw116hma8xfdh87r0.node0
+        - text: "|"
+        - link "Scheduled" [ref=e22] [cursor=pointer]:
+          - /url: /admin/scheduled.jsp;jsessionid=node011z0z536bvsw116hma8xfdh87r0.node0
+        - text: "|"
+        - link "Send" [ref=e23] [cursor=pointer]:
+          - /url: /admin/send.jsp;jsessionid=node011z0z536bvsw116hma8xfdh87r0.node0
+      - paragraph [ref=e25]:
+        - link "Support" [ref=e26] [cursor=pointer]:
+          - /url: http://activemq.apache.org/support.html
+        - text: "|"
+        - link "Logout" [ref=e27] [cursor=pointer]:
+          - /url: logout.jsp
+    - table [ref=e28]:
+      - rowgroup [ref=e29]:
+        - row "Welcome! Welcome to the Apache ActiveMQ Console of localhost (ID:03c0c629f2e7-40089-1778064378318-0:1) You can find more information about Apache ActiveMQ on the Apache ActiveMQ Site Broker Name localhost Version 5.17.3 ID ID:03c0c629f2e7-40089-1778064378318-0:1 Uptime 4 minutes Store percent used 0 Memory percent used 0 Temp percent used 0 Queue Views Graph XML Topic Views XML Subscribers Views XML Useful Links Documentation FAQ Downloads Forums" [ref=e30]:
+          - cell "Welcome! Welcome to the Apache ActiveMQ Console of localhost (ID:03c0c629f2e7-40089-1778064378318-0:1) You can find more information about Apache ActiveMQ on the Apache ActiveMQ Site Broker Name localhost Version 5.17.3 ID ID:03c0c629f2e7-40089-1778064378318-0:1 Uptime 4 minutes Store percent used 0 Memory percent used 0 Temp percent used 0" [ref=e31]:
+            - generic [ref=e32]:
+              - heading "Welcome!" [level=2] [ref=e33]
+              - paragraph [ref=e34]: Welcome to the Apache ActiveMQ Console of localhost (ID:03c0c629f2e7-40089-1778064378318-0:1)
+              - paragraph [ref=e35]:
+                - text: You can find more information about Apache ActiveMQ on the
+                - link "Apache ActiveMQ Site" [ref=e36] [cursor=pointer]:
+                  - /url: http://activemq.apache.org/
+              - heading "Broker" [level=2] [ref=e37]
+              - table [ref=e38]:
+                - rowgroup [ref=e39]:
+                  - row "Name localhost" [ref=e40]:
+                    - cell "Name" [ref=e41]
+                    - cell "localhost" [ref=e42]
+                  - row "Version 5.17.3" [ref=e43]:
+                    - cell "Version" [ref=e44]
+                    - cell "5.17.3" [ref=e45]
+                  - row "ID ID:03c0c629f2e7-40089-1778064378318-0:1" [ref=e46]:
+                    - cell "ID" [ref=e47]
+                    - cell "ID:03c0c629f2e7-40089-1778064378318-0:1" [ref=e48]
+                  - row "Uptime 4 minutes" [ref=e49]:
+                    - cell "Uptime" [ref=e50]
+                    - cell "4 minutes" [ref=e51]
+                  - row "Store percent used 0" [ref=e52]:
+                    - cell "Store percent used" [ref=e53]
+                    - cell "0" [ref=e54]
+                  - row "Memory percent used 0" [ref=e55]:
+                    - cell "Memory percent used" [ref=e56]
+                    - cell "0" [ref=e57]
+                  - row "Temp percent used 0" [ref=e58]:
+                    - cell "Temp percent used" [ref=e59]
+                    - cell "0" [ref=e60]
+          - cell "Queue Views Graph XML Topic Views XML Subscribers Views XML Useful Links Documentation FAQ Downloads Forums" [ref=e61]:
+            - generic [ref=e64]:
+              - heading "Queue Views" [level=3] [ref=e65]
+              - list [ref=e66]:
+                - listitem [ref=e67]:
+                  - link "Graph" [ref=e68] [cursor=pointer]:
+                    - /url: queueGraph.jsp
+                - listitem [ref=e69]:
+                  - link "XML" [ref=e70] [cursor=pointer]:
+                    - /url: xml/queues.jsp
+              - heading "Topic Views" [level=3] [ref=e71]
+              - list [ref=e72]:
+                - listitem [ref=e73]:
+                  - link "XML" [ref=e74] [cursor=pointer]:
+                    - /url: xml/topics.jsp
+              - heading "Subscribers Views" [level=3] [ref=e75]
+              - list [ref=e76]:
+                - listitem [ref=e77]:
+                  - link "XML" [ref=e78] [cursor=pointer]:
+                    - /url: xml/subscribers.jsp
+              - heading "Useful Links" [level=3] [ref=e79]
+              - list [ref=e80]:
+                - listitem [ref=e81]:
+                  - link "Documentation" [ref=e82] [cursor=pointer]:
+                    - /url: http://activemq.apache.org/
+                - listitem [ref=e83]:
+                  - link "FAQ" [ref=e84] [cursor=pointer]:
+                    - /url: http://activemq.apache.org/faq.html
+                - listitem [ref=e85]:
+                  - link "Downloads" [ref=e86] [cursor=pointer]:
+                    - /url: http://activemq.apache.org/download.html
+                - listitem [ref=e87]:
+                  - link "Forums" [ref=e88] [cursor=pointer]:
+                    - /url: http://activemq.apache.org/discussion-forums.html
+  - generic [ref=e94]: Copyright 2005-2022 The Apache Software Foundation.

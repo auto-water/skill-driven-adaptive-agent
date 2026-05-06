@@ -1,0 +1,26 @@
+- generic [ref=e6]:
+  - generic [ref=e8]: Linux 服务器运维管理面板
+  - generic [ref=e14]:
+    - generic [ref=e15]:
+      - generic [ref=e16]: 登录
+      - button "中文(简体)" [ref=e19]:
+        - text: 中文(简体)
+        - img [ref=e21]
+    - generic [ref=e26]:
+      - img [ref=e29]
+      - textbox "用户名" [ref=e31]
+    - generic [ref=e35]:
+      - img [ref=e38]
+      - textbox "密码" [ref=e41]
+    - button "登录" [ref=e44] [cursor=pointer]:
+      - generic [ref=e45]: 登录
+    - generic [ref=e47]:
+      - generic [ref=e48] [cursor=pointer]:
+        - generic [ref=e49]:
+          - checkbox "同意 « 飞致云社区软件许可协议 »"
+        - generic [ref=e52]:
+          - text: 同意 «
+          - link "飞致云社区软件许可协议" [ref=e53]:
+            - /url: https://www.fit2cloud.com/legal/licenses.html
+          - text: »
+      - generic [ref=e54]: 请点击同意社区软件许可协议

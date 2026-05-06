@@ -1,23 +1,23 @@
 #!/usr/bin/env python3
 """
-批量驱动 codes/init/main.py，对某一目录下所有靶场（含 docker-compose 的子目录）依次验证，
+批量驱动 codes/<impl>/main.py，对某一目录下所有靶场（含 docker-compose 的子目录）依次验证，
 并将各靶场的 metrics JSON 复制到指定目录（默认：仓库根目录下的 data/）。
 若指定的 --output-dir 无法创建或不可写（如无权限的 /data），会自动回退到上述默认目录并打印提示。
 
 示例（--main-py 必填，指向要驱动的 main.py）：
   python batch_verify_targets.py \\
-    --main-py /path/to/workbench/codes/init/main.py \\
+    --main-py /path/to/workbench/codes/adaptive/main.py \\
     --batch-root /path/to/baked_envs/post_auth
 
   # 指定其它输出目录 + 归档完整会话（含 report、usage、session.log）
   python batch_verify_targets.py \\
-    --main-py /path/to/workbench/codes/init/main.py \\
+    --main-py /path/to/workbench/codes/adaptive/main.py \\
     --batch-root /path/to/baked_envs/some_category \\
     --copy-session
 
   # 与旧版一致：会话不分子目录（codes/logs/<main 父目录名>/<前缀>-<slug>/）
   python batch_verify_targets.py \\
-    --main-py /path/to/workbench/codes/init/main.py \\
+    --main-py /path/to/workbench/codes/adaptive/main.py \\
     --batch-root /path/to/baked_envs/post_auth \\
     --flat-init-logs
 
@@ -26,7 +26,7 @@
 
 传入子进程的环境变量：VULHUB_ROOT、VULHUB_CASE、VULHUB_MODE、INIT_LOG_CATEGORY（除非 --flat-init-logs）。
 
-推荐与批量测试一起在 shell 或 --env 中设置的 main.py 变量（详见 codes/init/main.py）：
+推荐与批量测试一起在 shell 或 --env 中设置的 main.py 变量（详见对应 impl 目录下的 main.py）：
   MAIN_STRATEGY         react（默认）| plan_solve | queue；queue=Planner JSON+顺序任务队列（仅 arch/main）；metrics 键不变
   PLAN_MAX_ROUNDS       plan_solve 时规划阶段工具往返上限（默认 8；仅影响阶段一，MAX_ROUNDS 仍约束阶段二）
   MAX_ROUNDS              主智能体工具往返轮数上限（默认 20；0 需 ALLOW_UNLIMITED_ROUNDS=1，否则用 MAX_ROUNDS_HARD_CAP）
