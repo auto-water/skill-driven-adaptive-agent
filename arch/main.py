@@ -16,6 +16,7 @@ import threading
 import logging
 
 from function_tool import function_tool
+from sandbox_run_cmd import clamp_shell_timeout_sec
 import json as json_module
 
 
@@ -57,8 +58,11 @@ if _title:
 
 def _optional_openai_timeout_and_retries() -> Tuple[Any, int]:
     """
-    未设置 OPENROUTER_CHAT_TIMEOUT_SEC 时不覆盖 SDK 默认（读超时约 600s）。
-    若设置该变量：作为 httpx 读超时；默认 max_retries=0 以免超时后重试拖长墙钟（可用 OPENROUTER_MAX_RETRIES）。
+    未设置 OPENROUTER_CHAT_TIMEOUT_SEC 时：不覆盖 SDK 默认（读超时 600s，与 init/main 一致），避免慢模型
+    在 180s 被截断后触发 httpx 重试，把单次调用拖长到数分钟。
+
+    若显式设置 OPENROUTER_CHAT_TIMEOUT_SEC：使用该秒数 [30,900] 作为 httpx 读超时；默认将 max_retries 置 0
+    （可用 OPENROUTER_MAX_RETRIES 覆盖），避免「超时 → 再重试两轮」放大墙钟。
     """
     raw = (os.getenv("OPENROUTER_CHAT_TIMEOUT_SEC") or "").strip()
     if not raw:
@@ -105,9 +109,9 @@ def _default_vulhub_root() -> Path:
 VULHUB_ROOT: Path = _default_vulhub_root()
 DOCKER_COMPOSE_TIMEOUT_SEC = int(os.getenv("DOCKER_COMPOSE_TIMEOUT_SEC", "600"))
 
-# 运行产物根目录：codes/logs/init/<init>-<靶场或 PoC 父目录名>/
+# 运行产物根目录：codes/logs/<本文件父目录名>/<同名前缀>-<靶场或 PoC 父目录名>/（arch → codes/logs/arch/…）
 _CODES_DIR = Path(__file__).resolve().parent.parent
-SESSION_LOG_ROOT = _CODES_DIR / "logs" / "init"
+SESSION_LOG_ROOT = _CODES_DIR / "logs" / Path(__file__).resolve().parent.name
 
 
 def resolve_vulhub_case_dir(case_relative: str) -> Path:
@@ -175,7 +179,7 @@ _round_limit_hit_var: contextvars.ContextVar[bool] = contextvars.ContextVar(
 
 
 def _script_parent_dir_name() -> str:
-    """main.py 所在目录名，例如 init。"""
+    """main.py 所在目录名，例如 init、arch（与会话目录 codes/logs/<该名>/ 一致）。"""
     return Path(__file__).resolve().parent.name
 
 
@@ -200,7 +204,7 @@ def _sanitize_init_log_category(raw: str) -> str:
 
 def ensure_session_log_dir(session_label: str, subdir: Optional[str] = None) -> Path:
     """
-    创建 codes/logs/init/[subdir/]<session_label>/，返回绝对路径。
+    创建 codes/logs/<实现目录名>/[subdir/]<session_label>/，返回绝对路径。
     subdir 非空时来自 INIT_LOG_CATEGORY，便于按 baked_envs 批次分类。
     """
     root = SESSION_LOG_ROOT.resolve()
@@ -226,12 +230,18 @@ def get_run_output_dir() -> Path:
     return Path(d).resolve() if d else Path.cwd().resolve()
 
 
+def _ensure_session_writable_paths(run_dir: Path, report_path: Path) -> None:
+    """保证会话目录与报告父目录存在，避免 write_text 时 FileNotFoundError。"""
+    run_dir.mkdir(parents=True, exist_ok=True)
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+
+
 @dataclass
 class RunOutcome:
     """单次 PoC / 靶场验证运行结果。"""
 
     text: str
-    main_exit_reason: str  # complete | max_rounds | token_budget | wall_timeout
+    main_exit_reason: str  # complete | max_rounds | token_budget | wall_timeout | request_timeout
     validation_success: bool
 
 
@@ -243,24 +253,9 @@ def _slug_from_target_url(url: str) -> str:
 
 async def _local_run_shell(command: str, timeout: int) -> str:
     """在宿主上以 shell 执行命令（授权实验环境；cwd 为当前 run 输出目录）。"""
-    workdir = str(get_run_output_dir())
-    proc = await asyncio.create_subprocess_shell(
-        command,
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE,
-        cwd=workdir,
-        executable="/bin/bash",
-    )
-    try:
-        out_b, err_b = await asyncio.wait_for(proc.communicate(), timeout=timeout)
-    except asyncio.TimeoutError:
-        proc.kill()
-        await proc.wait()
-        return f"Exit code: -1\n\nSTDOUT\n\nSTDERR\nTimed out after {timeout}s (local shell)"
-    out = out_b.decode(errors="replace") if out_b else ""
-    err = err_b.decode(errors="replace") if err_b else ""
-    code = proc.returncode if proc.returncode is not None else -1
-    return f"Exit code: {code}\n\nSTDOUT\n{out}\n\nSTDERR\n{err}"
+    from host_exec import local_run_shell
+
+    return await local_run_shell(command, timeout, str(get_run_output_dir()))
 
 
 # Usage tracking
@@ -317,6 +312,7 @@ class UsageTracker:
             "limit_hit_max_rounds": reason == "max_rounds",
             "limit_hit_token_budget": reason == "token_budget",
             "limit_hit_wall_timeout": reason == "wall_timeout",
+            "limit_hit_request_timeout": reason == "request_timeout",
             "main_agent_calls": len(self.main_agent_usage),
             "sandbox_agent_calls": len(self.sandbox_agent_usage),
             "total_calls": len(self.main_agent_usage) + len(self.sandbox_agent_usage),
@@ -371,6 +367,7 @@ def build_metrics_payload(
     汇总指标（供 metrics+{靶场名}.json）。
     - main_agent_rounds: 主智能体 LLM 调用次数（与 main_agent_calls 一致）
     - total_llm_rounds: 主 + 子智能体全部 LLM 调用次数
+    - limit_hit_request_timeout: 单次 chat.completions 超时（OPENROUTER_CHAT_TIMEOUT_SEC）
     """
     tokens, cost = rollup_tokens_and_cost(summary)
     reason = summary.get("main_exit_reason")
@@ -381,6 +378,7 @@ def build_metrics_payload(
         "limit_hit_max_rounds": bool(summary.get("limit_hit_max_rounds", False)),
         "limit_hit_token_budget": bool(summary.get("limit_hit_token_budget", False)),
         "limit_hit_wall_timeout": bool(summary.get("limit_hit_wall_timeout", False)),
+        "limit_hit_request_timeout": bool(summary.get("limit_hit_request_timeout", False)),
         "total_duration_ms": int(summary.get("total_duration_ms", 0)),
         "main_agent_rounds": int(summary.get("main_agent_calls", 0)),
         "sandbox_agent_rounds": int(summary.get("sandbox_agent_calls", 0)),
@@ -393,7 +391,8 @@ def build_metrics_payload(
 def write_metrics_file(
     run_dir: Path, target_label: str, summary: Dict[str, Any]
 ) -> Path:
-    """写入 codes/logs/init/.../metrics+{target_label}.json"""
+    """写入 codes/logs/<实现目录>/.../metrics+{target_label}.json"""
+    run_dir.mkdir(parents=True, exist_ok=True)
     safe = target_label.replace("/", "_").replace("\\", "_").strip() or "unknown"
     path = run_dir / f"metrics+{safe}.json"
     payload = build_metrics_payload(target_label, summary)
@@ -463,6 +462,10 @@ async def run_sandbox_agent(instruction: str, max_rounds: int = 20):
         (
             "You are an agent that runs on the local lab host using two tools: "
             "`sandbox_run_command` (bash on the host) and `sandbox_run_python` (Python on the host). "
+            "For any command that performs network I/O (curl, wget, nc, telnet, openssl s_client, "
+            "ssh to live hosts, etc.), you MUST include a tool-native time limit inside the shell command "
+            "itself (e.g. `curl --connect-timeout 3 --max-time 8 ...`, `wget -T 8 ...`, `nc -w 3 ...`). "
+            "Also pass a sensible `timeout` argument to `sandbox_run_command` as an outer cap (often 15–120). "
             "Keep responses within 30,000 characters; chunk large outputs. Think step-by-step before taking actions."
         ),
     )
@@ -492,6 +495,9 @@ async def run_validator_agent(instruction: str, max_rounds: int = 20):
             "`sandbox_run_command` (bash) and `sandbox_run_python` (Python). Your goal is to: "
             "(1) Reproduce the PoC minimally and safely, (2) Capture evidence (stdout, file diffs, HTTP responses), "
             "(3) Decide if the PoC reliably demonstrates a real vulnerability with impact, (4) Provide a concise verdict. "
+            "Whenever you use network-reachability checks (curl, wget, nc, etc.), the shell command MUST include "
+            "explicit per-tool timeouts (e.g. `curl --connect-timeout 3 --max-time 8 ...`) and you MUST set "
+            "`sandbox_run_command`'s `timeout` parameter as a reasonable outer bound. "
             "Always think step-by-step before actions. Keep outputs within 30,000 characters and chunk large outputs. "
             "Avoid destructive actions unless explicitly required for validation."
         ),
@@ -560,10 +566,13 @@ async def sandbox_run_command(command: str, timeout: int = 120):
     在宿主上以 bash 执行 shell 命令，返回 stdout/stderr/exit code（cwd 为当前会话输出目录）。
 
     Arguments:
-        command: 要执行的 shell 命令（如 ls -la）。
-        timeout: 最长等待秒数。
+        command: 要执行的 shell 命令（如 ls -la）。若含 curl/wget/nc 等网络访问，命令正文中必须写出
+            工具自带的超时（例如 curl 的 --connect-timeout 与 --max-time），勿依赖无上限请求。
+        timeout: 整段 shell（含 pipeline）的最长等待秒数；超时后运行时会终止进程组（见 sandbox_run_cmd）。
+            受环境变量 SANDBOX_SHELL_TIMEOUT_DEFAULT / SANDBOX_SHELL_TIMEOUT_MAX 钳制；网络探测建议 15–120。
     """
-    print(f"Running command (local): {command}")
+    timeout = clamp_shell_timeout_sec(timeout)
+    print(f"Running command (local, timeout={timeout}s): {command}")
     try:
         return await _local_run_shell(command, timeout)
     except Exception as e:
@@ -709,11 +718,14 @@ def _env_int_nonnegative(name: str, default: int = 0) -> int:
 def _main_strategy() -> str:
     """
     MAIN_STRATEGY=react（默认）：单段 ReAct 式工具循环。
-    MAIN_STRATEGY=plan_solve：先仅 read_poc_file 规划，再全工具执行（仍写入同一套 metrics 字段）。
+    MAIN_STRATEGY=plan_solve：先仅 read_poc_file 规划，再全工具执行。
+    MAIN_STRATEGY=queue：Planner JSON + 顺序 TaskQueue（硬编排）。
     """
     v = (os.getenv("MAIN_STRATEGY", "react") or "react").strip().lower().replace("-", "_")
     if v in ("plan_solve", "ps", "psolve"):
         return "plan_solve"
+    if v in ("queue", "hard_queue", "task_queue"):
+        return "queue"
     return "react"
 
 
@@ -743,7 +755,8 @@ _PLAN_PHASE_SYSTEM_SUFFIX = (
 _EXEC_PHASE_SYSTEM_SUFFIX = (
     "\n\n【阶段二：执行】\n"
     "现已进入执行阶段：你可使用 read_poc_file、validator_agent、sandbox_agent、vulhub_compose_* 等全部工具，"
-    "按上文材料与计划完成复现与取证，并输出最终漏洞验证报告（须含执行摘要、证据、明确结论，以及单独小节「关键 payload」）。"
+    "按上文材料与计划完成复现与取证，并输出最终漏洞验证报告（须含执行摘要、证据、明确结论，以及单独小节「关键 payload」）。\n"
+    "经子智能体执行的网络类 shell：须在命令内写明 curl/wget/nc 等自带超时，并为 sandbox_run_command 设合理 timeout。"
 )
 
 _SOLVE_PHASE_USER = (
@@ -861,6 +874,86 @@ def read_targets_from_file(file_path: str) -> List[str]:
         print(f"Error reading target file: {e}")
         return []
 
+
+async def _run_planner_queue_branch(
+    max_rounds: int,
+    user_prompt: str,
+    system_prompt: str,
+    target_url: str,
+) -> RunOutcome:
+    """MAIN_STRATEGY=queue：LLM 产出 JSON 任务表后由 planner_queue 顺序执行。"""
+    import planner_queue
+
+    logging.info(
+        "Main strategy=queue (PLANNER_MODEL=%r, max_rounds=%s)",
+        (os.getenv("PLANNER_MODEL") or "").strip() or CHAT_MODEL,
+        max_rounds,
+    )
+    model = (os.getenv("PLANNER_MODEL") or "").strip() or CHAT_MODEL
+    hint = target_url or ""
+
+    def _log_main(u: Any, t_hint: str) -> None:
+        tr = get_current_usage_tracker()
+        if tr and u is not None:
+            tr.log_main_agent_usage(u, t_hint)
+
+    user_body = (
+        user_prompt
+        + f"\n\n【编排约束】主循环 max_rounds={max_rounds}；validator 类任务的 max_rounds 不得超过该值。"
+    )
+    tasks, err = await planner_queue.plan_tasks_json(
+        client,
+        model=model,
+        system_prompt=system_prompt,
+        user_body=user_body,
+        target_hint=hint,
+        log_main_usage=_log_main,
+        usage_to_plain=_usage_to_plain,
+    )
+    if not tasks:
+        return RunOutcome(
+            text=err or "Planner failed",
+            main_exit_reason="complete",
+            validation_success=False,
+        )
+
+    wall_t0 = time.monotonic()
+    max_wall = _env_int_nonnegative("MAX_WALL_CLOCK_SEC", 0)
+    max_tok = _env_int_nonnegative("MAX_TOTAL_TOKENS", 0)
+
+    async def _shell_runner(cmd: str, to: int) -> str:
+        from host_exec import local_run_shell
+
+        return await local_run_shell(cmd, clamp_shell_timeout_sec(to), str(get_run_output_dir()))
+
+    async def _val_runner(inst: str, mr: int) -> str:
+        mr_adj = min(mr, max_rounds) if max_rounds > 0 else mr
+        mr2 = _clamp_nested_tool_max_rounds(mr_adj)
+        return await run_validator_agent(inst, mr2)
+
+    def _tok() -> int:
+        tr = get_current_usage_tracker()
+        if not tr:
+            return 0
+        return rollup_tokens_and_cost(tr.get_summary())[0]
+
+    text, reason, ok = await planner_queue.run_planned_queue(
+        tasks,
+        shell_runner=_shell_runner,
+        validator_runner=_val_runner,
+        get_total_tokens=_tok,
+        max_total_tokens=max_tok,
+        max_wall_sec=max_wall,
+        wall_t0=wall_t0,
+    )
+    if reason in ("wall_timeout", "token_budget"):
+        _round_limit_hit_var.set(True)
+    print(text)
+    lim = _round_limit_hit_var.get()
+    final_ok = ok and reason == "complete" and bool((text or "").strip()) and not lim
+    return RunOutcome(text=text or "", main_exit_reason=reason, validation_success=final_ok)
+
+
 async def run_continuously(max_rounds: int = 20, user_prompt: str = "", system_prompt: str = "", target_url: str = "", sandbox_instance=None) -> RunOutcome:
     """
     PoC 验证主循环（OpenRouter Chat Completions + 工具）。
@@ -873,12 +966,20 @@ async def run_continuously(max_rounds: int = 20, user_prompt: str = "", system_p
     当环境变量 MAIN_STRATEGY=plan_solve 时：先仅允许 read_poc_file（轮数上限见 PLAN_MAX_ROUNDS，默认 8），
     再进入全工具执行阶段；max_rounds 仍仅约束执行阶段。metrics JSON 字段集合与 react 模式一致（main_agent_rounds
     为两阶段主模型调用次数之和，数据仍来自同一 UsageTracker 路径）。
+
+    MAIN_STRATEGY=queue：Planner（JSON tasks）+ TaskQueue 顺序执行 shell/validator/read_file（见 planner_queue）。
     """
     _ = sandbox_instance
     _thread_local.current_target_url = target_url
     _round_limit_hit_var.set(False)
 
-    if _main_strategy() != "plan_solve":
+    strategy = _main_strategy()
+    if strategy == "queue":
+        return await _run_planner_queue_branch(
+            max_rounds, user_prompt, system_prompt, target_url
+        )
+
+    if strategy != "plan_solve":
         messages: List[Dict[str, Any]] = [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt},
@@ -1035,6 +1136,7 @@ async def run_single_target_scan(target_url: str, system_prompt: str, base_user_
         usage_tracker.set_exit_metadata(outcome)
 
         result_path = run_dir / "report.md"
+        _ensure_session_writable_paths(run_dir, result_path)
         with open(result_path, "w", encoding="utf-8") as f:
             f.write(outcome.text)
 
@@ -1206,6 +1308,8 @@ if __name__ == "__main__":
             "- vulhub_compose_pull / vulhub_compose_up / vulhub_compose_down：在靶场目录执行 compose；case_dir_relative 为相对 VULHUB_ROOT 的路径片段、或绝对路径；空字符串表示 VULHUB_ROOT。\n"
             "- read_poc_file：读取 README.md 或其它说明文件（相对路径按 cwd 解析）。\n"
             "- validator_agent：在本地宿主环境按 PoC 最小化复现并取证；必要时用 sandbox_agent 做更灵活的命令行探索（均为本地 bash/python3）。\n"
+            "凡通过 sandbox_run_command / 子智能体内 shell 做 HTTP 或任意网络探测时：命令正文必须包含工具自带的超时参数（例如 curl 使用 --connect-timeout 与 --max-time；wget 使用 -T；nc 使用 -w），"
+            "并同时为 sandbox_run_command 传入合理的 timeout 秒数作为外层兜底；禁止依赖无超时上限的网络命令。\n"
             "宿主程序可能在对话前已自动 pull+up，并在对话结束后自动 down -v；你仍可在需要时自行调用 compose 工具（例如重建环境）。\n"
             "若本机或子进程网络无法直达靶场映射端口，须在报告中说明，并给出应在「与靶场互通的网络环境」下执行的 curl/http 验证命令与关键 payload。\n"
             "最终输出必须包含：执行摘要、验证步骤、证据摘录、明确结论（有效/无效/无法判断）、以及单独小节「关键 payload」（curl/原始 HTTP/可复用利用片段）。",
@@ -1249,6 +1353,7 @@ if __name__ == "__main__":
             report_path = Path(rf)
         else:
             report_path = run_dir / (rf or "report.md")
+        _ensure_session_writable_paths(run_dir, report_path)
         report_path.write_text(outcome.text or "", encoding="utf-8")
         usage_path, usage_snapshot = tracker.save_to_file()
         metrics_path = write_metrics_file(run_dir, slug, usage_snapshot)
@@ -1266,6 +1371,7 @@ if __name__ == "__main__":
         "SYSTEM_PROMPT",
         "你是授权实验环境下的 Web 漏洞 PoC 验证助手。流程：必要时用 read_poc_file 读取 PoC 文件；"
         "用 validator_agent 在本地环境中最小化复现并给出结论；仅在需要更自由命令行探索时使用 sandbox_agent（宿主执行）。"
+        "凡 shell 网络验证：命令内须写明 curl/wget/nc 等自带的超时选项，并为 sandbox_run_command 设置合理 timeout。"
         "最终回复须包含：执行摘要、验证步骤、证据（命令/输出片段）、明确结论（有效/无效/无法判断），"
         "以及单独小节「关键 payload」列出 curl、HTTP 原始报文或可复用利用片段。",
     )
@@ -1299,6 +1405,7 @@ if __name__ == "__main__":
         report_path = Path(rf)
     else:
         report_path = run_dir / (rf or "report.md")
+    _ensure_session_writable_paths(run_dir, report_path)
     report_path.write_text(outcome.text or "", encoding="utf-8")
     usage_path, usage_snapshot = tracker.save_to_file()
     metrics_label = poc_file.parent.name if poc_file.is_file() else poc_file.name
