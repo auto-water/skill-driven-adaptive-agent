@@ -394,6 +394,16 @@ def main() -> int:
         action="store_true",
         help="除 metrics 外，将会话目录整份复制到 <output>/<batch-root名>/_sessions/<靶场相对路径>/",
     )
+    ap.add_argument(
+        "--only",
+        action="append",
+        default=None,
+        metavar="DIR_NAME",
+        help=(
+            "仅运行 batch-root 下子目录名为 DIR_NAME 的靶场（与 discover 结果中的目录名一致，可重复）。"
+            "未指定则运行该 batch-root 下全部靶场。"
+        ),
+    )
     args = ap.parse_args()
 
     output_root = _ensure_output_root(args.output_dir)
@@ -417,6 +427,23 @@ def main() -> int:
             file=sys.stderr,
         )
         return 1
+
+    if args.only:
+        only_set = set(args.only)
+        discovered = {c.name for c in cases}
+        missing = sorted(only_set - discovered)
+        if missing:
+            print(
+                f"[警告] --only 中有未在 batch-root 下发现的目录名: {missing}",
+                file=sys.stderr,
+            )
+        cases = [c for c in cases if c.name in only_set]
+        if not cases:
+            print(
+                "筛选后没有待运行的靶场（请核对 --only 与 batch-root 下子目录名是否一致）。",
+                file=sys.stderr,
+            )
+            return 1
 
     extra_env = parse_env_pairs(args.env)
     log_cat: Optional[str] = None if args.flat_init_logs else batch_root.resolve().name

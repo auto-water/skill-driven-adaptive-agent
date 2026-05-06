@@ -1,0 +1,14 @@
+{
+  "target_name": "x3.4-arbitrary-file-deletion",
+  "validation_success": true,
+  "main_exit_reason": "complete",
+  "limit_hit_max_rounds": false,
+  "limit_hit_token_budget": false,
+  "limit_hit_wall_timeout": false,
+  "total_duration_ms": 232363,
+  "main_agent_rounds": 6,
+  "sandbox_agent_rounds": 7,
+  "total_llm_rounds": 13,
+  "total_tokens": 30354,
+  "total_cost_usd": 0.0042676955999999995
+}
